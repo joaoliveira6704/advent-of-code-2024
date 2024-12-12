@@ -21,8 +21,12 @@ def is_increasing(list1):
                 safe += 1
             elif c == 0:
                 print(abs(a-b), "unsafe")
+                list1.pop(i+1)
+                is_increasing(list1)
                 unsafe +=1
             else:
+                list1.pop(i+1)
+                is_increasing(list1)
                 unsafe+=1
     
     if unsafe > 0:
@@ -53,8 +57,12 @@ def is_decreasing(list1):
                 safe +=1
             elif c == 0:
                 print(abs(a-b), "unsafe")
+                list1.pop(i+1)
+                is_decreasing(list1)
                 unsafe +=1
             else:
+                list1.pop(i+1)
+                is_decreasing(list1)
                 unsafe+=1
     if unsafe > 0:
         safe = False

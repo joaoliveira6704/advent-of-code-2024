@@ -1,7 +1,7 @@
 list1 = []
 list2 = []
 
-f = open(".\\day1\\data.csv", "r")
+f = open("day1/data.csv", "r")
 
 lines = f.readlines()
 
