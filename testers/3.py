@@ -1,54 +1,106 @@
 list1 = []
-
-f = open(".\\testers\\data.csv", "r")
-
-lines = f.readlines()
-i=0
-for line in lines:
-    fields = line.split(";")
-    print(fields)
-    list1.append([])
-    for field in fields:
-        try:
-            list1[i].append(int(field))
-        except ValueError:
-            list1[i].append(int(field.strip("\n")))
-    i+=1
-
-#f.close()
-print(list1)
-unsafe = 0
-safe = 0
-safeTotal = 0
-unsafeTotal = 0
-compare = 0
-for i in range(len(list1)):
-    soma = 0
-    unsafe = 0
+counter =0
+def is_increasing(list1):
+    print(list1)
     safe = 0
-    for j in range(len(list1[i])):
-        list1[i].sort()
-        if j<len(list1[i])-1:
-            if list1[i][j] - list1[i][j+1] < 1 or list1[i][j] - list1[i][j+1] > 2:
-                unsafe += 1
-            elif list1[i][j+1] - list1[i][j] < 1 or list1[i][j+1] - list1[i][j] > 3:
-                unsafe += 1
-            else:
-                safe += 1
+    unsafe = 0
+    for i in range(len(list1)):
+        if i == len(list1)-1:
+            a=list1[i]
+            b=list1[i-1]
+            c=abs(a-b)
+            if c == 1 or c==2 or c==3:
+                safe+=1
         else:
-            compare = list1[i][j-1]
-            if compare - list1[i][j] < 1 or compare - list1[i][j] > 2:
-                unsafe += 1
-            elif list1[i][j] - compare < 1 or list1[i][j] - compare > 3:
-                unsafe += 1
-            else:
+            a = list1[i]
+            b = list1[i+1]
+            print(a,b," Increasing")
+            c = b-a
+            if c == 1 or c==2 or c==3:
+                print(abs(a-b), "safe")
                 safe += 1
-                
-    if unsafe >= 1:
-        unsafeTotal += 1
-        print(f"line {i+1} unsafe")
+            elif c == 0:
+                print(abs(a-b), "unsafe")
+                unsafe +=1
+            else:
+                unsafe+=1
+    
+    if unsafe > 0:
+        safe = False
     else:
-        safeTotal += 1
-        print(f"line {i+1} safe")
+        safe = True
 
-print(f"Safe: {safeTotal}\nUnsafe: {unsafeTotal}")
+    return safe
+
+def is_decreasing(list1):
+    print(list1)
+    safe=0
+    unsafe=0
+    for i in range(len(list1)):
+        if i == len(list1)-1:
+            a=list1[i]
+            b=list1[i-1]
+            c=abs(a-b)
+            if c == 1 or c==2:
+                safe+=1
+        else:
+            a = list1[i]
+            b = list1[i+1]
+            print(a,b," Decreasing")
+            c = a-b
+            if c == 1 or c==2:
+                print(abs(a-b), "safe")
+                safe +=1
+            elif c == 0:
+                print(abs(a-b), "unsafe")
+                unsafe +=1
+            else:
+                unsafe+=1
+    if unsafe > 0:
+        safe = False
+    else:
+        safe = True
+    return safe
+
+def check_line(line):
+    list1 = line.split(";")
+    for  i in range(len(list1)):
+        if i == (len(list1) - 1):
+            list1[i] = int(list1[i].strip("\n"))
+        else:
+            list1[i] = int(list1[i])
+
+    for i in range(2):
+
+            a = list1[i]
+            b = list1[i+1]
+
+            if a > b:
+                valid = is_decreasing(list1)
+                print(valid)
+                if valid == False:
+                    return False
+                else:
+                    return True
+            elif a < b:
+                valid = is_increasing(list1)
+                if valid == False:
+                    return False
+                else:
+                    return True
+            else:
+                return False
+
+    list1=[]
+
+with open("testers/data2.csv") as file:
+    lines = file.readlines()
+    for line in lines:
+        isSafe = check_line(line)
+        if isSafe == True:
+            print(line, "line safe")
+            counter+=1
+        else:
+            print(line, "line unsafe")
+
+print(counter)
