@@ -21,12 +21,8 @@ def is_increasing(list1):
                 safe += 1
             elif c == 0:
                 print(abs(a-b), "unsafe")
-                list1.pop(i+1)
-                is_increasing(list1)
                 unsafe +=1
             else:
-                list1.pop(i+1)
-                is_increasing(list1)
                 unsafe+=1
     
     if unsafe > 0:
@@ -57,12 +53,8 @@ def is_decreasing(list1):
                 safe +=1
             elif c == 0:
                 print(abs(a-b), "unsafe")
-                list1.pop(i+1)
-                is_decreasing(list1)
                 unsafe +=1
             else:
-                list1.pop(i+1)
-                is_decreasing(list1)
                 unsafe+=1
     if unsafe > 0:
         safe = False
@@ -101,7 +93,7 @@ def check_line(line):
 
     list1=[]
 
-with open("testers/data2.csv") as file:
+with open(".\\day2\\input.txt") as file:
     lines = file.readlines()
     for line in lines:
         isSafe = check_line(line)
